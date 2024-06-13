@@ -12,7 +12,14 @@
         <div id="employees">
             <!-- Employee forms will be injected here by JavaScript -->
         </div>
+        <div>
+            <label for="csv-filename">CSV Filename:</label>
+            <input type="text" id="csv-filename" value="salaries.csv">
+            <input type="file" id="csv-file-input">
+        </div>
+        <div id="csv-table-container"></div>
         <button onclick="calculateSalaries()">Calculate Salaries</button>
+        <button onclick="downloadCSV()">Download CSV</button>
     </div>
 
     <script src="script.js"></script>
