@@ -1,14 +1,15 @@
 const baseSalary = {
-    Asma: 11800,
-    Jalpa: 11000,
+    Asma: 11400,
+    Jalpa: 7000,
     Manju: 9000,
-    Hansa: 9000,
-    Shrusti: 9000,
-    Urvasi: 9000,
-    Madhuben: 9000,
-    Gitaben: 9000,
-    Ushaben: 9000,
-    Nightayaben: 9000
+    Hansa: 11000,
+    Shrusti: 11600,
+    Urvasi: 4500,
+    Madhuben: 8000,
+    Gitaben: 7500,
+    Ushaben: 7800,
+    Jamnaben: 9000,
+    DrShivali: 18300
 };
 
 const salaryDays = {
@@ -21,7 +22,8 @@ const salaryDays = {
     Madhuben: 28,
     Gitaben: 28,
     Ushaben: 28,
-    Nightayaben: 28
+    Jamnaben: 28,
+    DrShivali: 26
 };
 
 
@@ -35,7 +37,8 @@ const employees = [
     "Madhuben",
     "Gitaben",
     "Ushaben",
-    "Nightayaben"
+    "Jamnaben",
+    "DrShivali" 
 ];
 
 let rows = []
@@ -112,6 +115,7 @@ function displayCSVTable(headers, rows) {
 }
 
 function calculateSalaries() {
+   let total = 0;
     employees.forEach(employee => {
         const leaves = parseInt(document.getElementById(`${employee}-leaves`).value) || 0;
         const extraDays = parseInt(document.getElementById(`${employee}-extra`).value) || 0;
@@ -120,8 +124,10 @@ function calculateSalaries() {
         const additionPerExtraDay = amt;
         
         let calculatedSalary = Math.round(baseSalary[employee] - (leaves * deductionPerLeave) + (extraDays * additionPerExtraDay));
-        document.getElementById(`${employee}-salary`).innerText = `Calculated Salary: ₹${calculatedSalary}`;
+        total += calculatedSalary;
+	document.getElementById(`${employee}-salary`).innerText = `Calculated Salary: ₹${calculatedSalary}`;
     });
+   document.getElementById(`salary-btn`).innerText = `Salary Total = ₹${total}`;
 }
 
 function downloadCSV() {
@@ -129,6 +135,17 @@ function downloadCSV() {
     let csvContent = 'data:text/csv;charset=utf-8,';
 
     // Add previous data
+    if (rows.length === 0){
+    	employees.forEach((value, index) => {
+	    if (index === (employees.length-1) ){
+	    	csvContent += value + '\n';
+	    }
+	    else {
+		csvContent += value + ',';
+	    }
+		
+	})
+    }
     rows.forEach((value, index) => {
         csvContent += value + '\n';
     });
